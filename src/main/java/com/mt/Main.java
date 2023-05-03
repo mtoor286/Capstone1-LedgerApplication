@@ -157,10 +157,11 @@ public class Main {
         String input;
         do {
             System.out.println("--Reports--");
-            System.out.println("\t1) Month To Date");
+            System.out.println("\t1) Month to Date");
             System.out.println("\t2) Previous Month");
-            System.out.println("\t3) Year To Date");
+            System.out.println("\t3) Year to Date");
             System.out.println("\t4) Previous Year");
+            System.out.println("\t5) Search by Vendor");
             System.out.println("\t0) Back");
             System.out.println("Please enter a command: ");
 
@@ -179,6 +180,9 @@ public class Main {
                     break;
                 case "4":
                     previousYear();
+                    break;
+                case "5":
+                    searchByVendor();
                     break;
                 case "0":
                     System.out.println("Exiting back to the Main Menu.");
@@ -210,6 +214,9 @@ public class Main {
         // beginningOfCurrentYear = LocalDate.now().getYear() + "-01-01 00:00:00"
 
         // givenDateTime > beginningOfLastYear && givenDateTime < beginningOfCurrentYear
+    }
+    private static void searchByVendor() {
+
     }
 
 }
