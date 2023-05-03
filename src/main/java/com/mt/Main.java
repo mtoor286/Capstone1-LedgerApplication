@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 public class Main {
 //    static ArrayList<Transactions> transactions = new ArrayList<>();
@@ -201,7 +201,6 @@ public class Main {
        //  prevMonth = LocalDate.now().getYear() + "-" LocalDate.now().minusMonths(1).getMonth() + "-" 00 + 00:00:00"
        //  currentMonth = LocalDate.now().getYear() + "-" LocalDate.now().getMonth() + "-" 00 + 00:00:00"
        //  givenDateTime > prevMonth && givenDateTime < currentMonth
-
     }
     private static void yearToYear() {
         // From the beginning of the year
@@ -217,6 +216,30 @@ public class Main {
     }
     private static void searchByVendor() {
 
-    }
+        File file = new File("./src/main/java/com/mt/transactions.txt");
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Enter the Vendor name your looking for: ");
+        String name = scanner.next();
+
+        try {
+            scanner = new Scanner(file);
+
+            System.out.println("Transactions under this Vendor: ");
+
+            while (scanner.hasNext()) {
+
+                final String linesFromFile = scanner.nextLine();
+                if (linesFromFile.contains(name)) {
+
+                    System.out.println(linesFromFile);
+                }
+
+            } System.out.println("End of List.");
+
+        } catch (IOException e) {
+            System.out.println("Vendor name not found, please try again.");
+            e.printStackTrace();
+        }
+    }
 }
