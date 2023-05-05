@@ -6,7 +6,7 @@ public class Transactions {
     private String Time;
     private String Description;
     private String Vendor;
-    private double Amount;
+    private static double Amount;
 //////////////////////////////////////////////  Constructor
     public Transactions(String date, String time, String description, String vendor, double amount) {
         Date = date;
@@ -28,7 +28,7 @@ public class Transactions {
     public String getVendor() {
         return Vendor;
     }
-    public double getAmount() {
+    public static double getAmount() {
         return Amount;
     }
 //////////////////////////////////////////////  Setters

@@ -1,19 +1,20 @@
 package com.mt;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Scanner;
-//import java.util.ArrayList;
 
 public class Main {
-//    static ArrayList<Transactions> transactions = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
 
-        String input = new String();
+        String input;
         do {
             System.out.println("--Home--");
             System.out.println("\tD: Add Deposit");
@@ -21,6 +22,7 @@ public class Main {
             System.out.println("\tL: Ledger");
             System.out.println("\tX: Exit");
             System.out.println("Please enter a command: ");
+
             input = scanner.nextLine();
 
             switch (input.toUpperCase()) {
@@ -79,7 +81,7 @@ public class Main {
         System.out.println("Enter the time of the payment (HH-MM-SS): ");
         String Time = scanner.nextLine();
 
-        System.out.println("Please enter any description of the payment:  ");
+        System.out.println("Please enter any description of the payment: ");
         String Description = scanner.nextLine();
 
         System.out.println("Enter the vendor: ");
@@ -100,11 +102,11 @@ public class Main {
             e.printStackTrace();
         }
     }
-    private static void Ledger() throws FileNotFoundException {
+    private static void Ledger() throws IOException {
 
         String input;
         do {
-            System.out.println("--Main Menu--");
+            System.out.println("--Ledger Menu--");
             System.out.println("\tA) Display all entries");
             System.out.println("\tD) Deposits");
             System.out.println("\tP) Payments");
@@ -116,7 +118,7 @@ public class Main {
 
             switch (input.toUpperCase()) {
                 case "A":
-                    displayAllEntries();
+                    displayAllTransactions();
                     break;
                 case "D":
                     Deposits();
@@ -134,10 +136,9 @@ public class Main {
                     System.out.println("Invalid Input, please try again.");
                     break;
             }
-
         } while (!input.equalsIgnoreCase("H"));
     }
-    private static void displayAllEntries() throws FileNotFoundException {
+    private static void displayAllTransactions() throws FileNotFoundException {
 
         Scanner input = new Scanner(new File("./src/main/java/com/mt/transactions.txt"));
 
@@ -148,15 +149,59 @@ public class Main {
             System.out.println(input.nextLine());
         }
     }
-    private static void Deposits() {
+    private static void Deposits() throws IOException {
+
+            FileReader fileReader = new FileReader("./src/main/java/com/mt/transactions.txt");
+
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String linesFromFile;
+
+            while ((linesFromFile = bufferedReader.readLine()) != null) {
+
+                String[] numbers = linesFromFile.split(linesFromFile);
+                int num = 0;
+                boolean hasPositive = (num > 0);
+
+                for (String number : numbers) {
+                    num = Integer.parseInt(number);
+                    if (num < 0) {
+//                        hasPositive;
+                        break;
+                    }
+                }
+            }
+            fileReader.close();
+            bufferedReader.close();
     }
-    private static void Payments() {
+    private static void Payments() throws IOException {
+
+        FileReader fileReader = new FileReader("./src/main/java/com/mt/transactions.txt");
+
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String linesFromFile;
+
+        while ((linesFromFile = bufferedReader.readLine()) != null) {
+
+            String[] numbers = linesFromFile.split(linesFromFile);
+            int num = 0;
+            boolean hasNegative = (num < 0);
+
+            for (String number : numbers) {
+                num = Integer.parseInt(number);
+                if (num < 0) {
+//                        hasNegative;
+                    break;
+                }
+            }
+        }
+        fileReader.close();
+        bufferedReader.close();
     }
     private static void Reports() {
 
         String input;
         do {
-            System.out.println("--Reports--");
+            System.out.println("--Reports Menu--");
             System.out.println("\t1) Month to Date");
             System.out.println("\t2) Previous Month");
             System.out.println("\t3) Year to Date");
@@ -193,9 +238,53 @@ public class Main {
 
         } while (!input.equalsIgnoreCase("0"));
     }
+    private static void searchByVendor() {
+
+        File file = new File("./src/main/java/com/mt/transactions.txt");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the Vendor name your looking for: ");
+        String name = scanner.next();
+
+        try {
+            scanner = new Scanner(file);
+
+            System.out.println("Transactions under this Vendor: ");
+            System.out.println("| Date | Time | Description | Vendor | Amount |");
+
+            while (scanner.hasNext()) {
+
+                final String linesFromFile = scanner.nextLine();
+                if (linesFromFile.contains(name)) {
+
+                    System.out.println(linesFromFile);
+                }
+
+            }
+            System.out.println("End of List.");
+
+        } catch (IOException e) {
+            System.out.println("Vendor name not found, please try again.");
+            e.printStackTrace();
+        }
+    }
     private static void monthToDate() {
-       //  BeginningOfMonth Create a date LocalDate.now().getYear() + "-" LocalDate.now().getMonth() + "-" 00 + 00:00:00"
-       //  givenDateTime > BeginningOfMonth
+
+        String date = "2023-05-10";
+        String time = "10:13:25";
+        String dateTime = date + " " + time;
+
+        LocalDateTime now = LocalDateTime.now();
+        int currentYear = now.getYear();
+        int currentMonth = now.getMonthValue();
+
+        LocalDateTime transactionDateTime = null;
+        int transactionYear = transactionDateTime.getYear();
+        int transactionMonth = transactionDateTime.getMonthValue();
+
+        if(currentYear == transactionYear && currentMonth == transactionMonth){
+            System.out.println("Magic!!!");
+        }
     }
     private static void previousMonth() {
        //  prevMonth = LocalDate.now().getYear() + "-" LocalDate.now().minusMonths(1).getMonth() + "-" 00 + 00:00:00"
@@ -213,33 +302,5 @@ public class Main {
         // beginningOfCurrentYear = LocalDate.now().getYear() + "-01-01 00:00:00"
 
         // givenDateTime > beginningOfLastYear && givenDateTime < beginningOfCurrentYear
-    }
-    private static void searchByVendor() {
-
-        File file = new File("./src/main/java/com/mt/transactions.txt");
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter the Vendor name your looking for: ");
-        String name = scanner.next();
-
-        try {
-            scanner = new Scanner(file);
-
-            System.out.println("Transactions under this Vendor: ");
-
-            while (scanner.hasNext()) {
-
-                final String linesFromFile = scanner.nextLine();
-                if (linesFromFile.contains(name)) {
-
-                    System.out.println(linesFromFile);
-                }
-
-            } System.out.println("End of List.");
-
-        } catch (IOException e) {
-            System.out.println("Vendor name not found, please try again.");
-            e.printStackTrace();
-        }
     }
 }

@@ -1,5 +1,6 @@
-2023-04-16|05-45-15|Monitor|Amazon|-140.35
-2023-04-15|10:13:25|Ergonomic keyboard|Amazon|-89.50
-2023-04-15|11:15:00|Invoice 1001 paid|Joe|1500.00
+2023-04-15|10-13-25|Ergonomic keyboard|Amazon|-89.50
+2023-04-15|11-15-00|Invoice 1001 paid|Alex|1500.00
 2023-04-24|03-24-53|Sun glasses|Ebay|-15.75
-2023-03-29|11-52-29|Invoice 1002 paid|Tom|3000.00
+2023-04-29|11-52-29|Invoice 1002 paid|Tom|3000.00
+2023-04-05|12-46-27|Monitor|Amazon|-150.75
+2023-05-05|01-13-20|lego|Amazon|-150.50
